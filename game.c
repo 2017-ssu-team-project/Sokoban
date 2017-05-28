@@ -1,3 +1,5 @@
+//시험용... 완성본 아님...
+
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
