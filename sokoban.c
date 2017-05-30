@@ -1,12 +1,12 @@
 #include <stdio.h>
-#define s 115
-#define f 102
-
 int main(void)
 {
-char ch;
+  pos=ftell(sokoban_ptr);   //현재 위치 유지
 
-ch = getc();
+        ch f;        
+	ch s;        
+	f=getc(sokoban);        
+	s=getc(sokoban);
 
 if(ch==f){
 	FILE *sokoban;
