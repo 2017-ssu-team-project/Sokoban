@@ -1,0 +1,148 @@
+#include <stdio.h>
+#include <string.h>
+
+int rank_time [5] [5];
+char rank_name [5] [5] [5];
+int time;
+
+char tmp_name [5];
+
+//=========
+int stage;
+char name [5] = {"name"};
+
+void rank_print(void);
+void rank_read(void);
+
+void _default (void)
+{
+        FILE *rk = fopen("ranking","w");
+        for (int j = 0; j<5; j++)
+        {
+                for (int i = 0; i<5; i++)
+                {
+                        fprintf(rk, "%d / %d / %d / %s\n", j, i, 10+10*i, name);
+                }
+        }
+
+        fclose(rk);
+        return;
+}
+
+
+int main(void)
+{
+        stage = 1;
+
+        char c;
+
+        scanf("%c", &c);
+        if (c == 'd')
+        {
+                _default ();
+        }
+        if (c== 's')
+        {
+                rank_read();
+        }
+        if (c=='p')
+        {
+                printf("time : ");
+                scanf("%d", &time);
+                printf("name : ");
+                scanf("%s", &name);
+                printf("%d, %s\n", time , name);
+                rank_print();
+        }
+        return 0;
+
+}
+
+void rank_print(void)
+{
+        int i = 0, j = 0;
+        FILE *rk =  fopen("ranking", "r");
+
+        while (!feof(rk))
+        {
+                fscanf(rk, "%d / %d / %d / %s\n", &i, &j, &time, &tmp_name);
+                rank_time [i] [j] = time;
+                strcpy(rank_name [i][j], tmp_name);
+        }
+        printf("repeat time ");
+        scanf("%d", &time);
+
+for (i = 0; i<5; i++ )
+{
+        if (time <= rank_time [stage] [i])
+                break;
+
+}
+//현재 기록과 랭킹의 기록을 비교 하는 과정
+
+
+if (rank_time[stage][4] < time)//랭킹 비교를 바탕으로 기록
+{
+}
+else
+{
+        for (int j =3; j >= i; j--) // 순위가 밀려남
+        {
+                rank_time [stage] [j+1] = rank_time [stage] [j];
+                strcpy(rank_name [stage] [j+1], rank_name [stage] [j]);
+        }
+        //그리고 빈 자리에 기록
+        rank_time [stage] [i] = time;
+        strcpy(rank_name [stage] [i], name);
+
+
+}
+        for (i=0 ; i<5; i++)
+        {
+                printf("map %d\n", i+1);
+
+                for (j=0; j<5; j++)
+                {
+                        printf("%d %s   %dsec\n", j + 1, rank_name[i][j],rank_time [i][j]);
+                }
+                printf("\n");
+        }
+        fclose(rk);
+
+        FILE *rt = fopen("ranking", "w");
+
+for ( int i = 0; i<5; i++)
+{
+        for (int j = 0; j<5; j++)
+        {
+        fprintf(rt, "%d / %d / %d / %s\n", i, j, rank_time [i] [j] , rank_name [i] [j]);
+        }
+}
+fclose(rt);
+
+}
+
+void rank_read(void)
+{
+        int i = 0, j = 0;
+        FILE *rk =  fopen("ranking", "r");
+
+        while (!feof(rk))
+        {
+                fscanf(rk, "%d / %d / %d / %s\n", &i, &j, &time, &tmp_name);
+                rank_time [i] [j] = time;
+                strcpy(rank_name [i][j], tmp_name);
+        }
+
+        for (i=0 ; i<5; i++)
+        {
+                printf("map %d\n", i+1);
+
+                for (j=0; j<5; j++)
+                {
+                        printf("%d %d   %s\n", j, rank_time [i][j], rank_name[i][j]);
+                }
+                printf("\n");
+        }
+        fclose(rk);
+}
