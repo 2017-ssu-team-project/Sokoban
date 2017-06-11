@@ -30,7 +30,7 @@ _Bool status=0; // 게임 실행여부를 나타냄(1은 게임상태, 0은 게�
 
 //시간 측정을 위한 변수들
 time_t start_c, end_c;
-double timer, save_timer;
+double timer, save_timer;//save_timer는 세이브 - 시작, timer는 종료- 시작+ save 
 
 //ranking 기능을위한 배열
 double rank_time [5] [5];
@@ -115,6 +115,7 @@ int main(void)
 
 			i = 0, j = -1;
 
+
 			if (boxes != storages)
 			{
 				printf("오류 : 스테이지 %d에서의 박스와 저장소의 수가 일치하지 않습니다.", s);
@@ -153,6 +154,7 @@ next_stage://클리어 하고나서 stage++을 한 후  다음 단계로 가는 
 
 	start_c = time (NULL);
 	save_timer = 0;
+	_Bool load = 0;//file load여부를 확인 하는 변수
 
 replay: //goto를 이용한 replay 지점
 	
@@ -354,6 +356,7 @@ replay: //goto를 이용한 replay 지점
 				load_file();
 				start_c = time (NULL);
 				end_c = time (NULL);
+				load = 1;
 				break;
 			//exit
 			case 'e':
@@ -368,6 +371,10 @@ replay: //goto를 이용한 replay 지점
 //시간 종료, 랭킹 등록, 다음 스테이지로 이동
 
 	end_c = time (NULL);
+	if (load == 0)//load를 하지 않았다면
+	{
+		save_timer = 0;
+	}
    	timer = save_timer + difftime(end_c, start_c);
 
 	printf("  %.fsec\ncongratulation %s!!\n", timer, name);
