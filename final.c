@@ -746,7 +746,7 @@ void rank_print(void)
 		Drawmap();
 		return;
 	}
-	else if ((input_char >='1') && (input_char <= '5') ) ////exit하기 위해서, input_char함수에 문자를할당함
+	else if ((input_char >='1') && (input_char <= '5') ) //exit하기 위해서, input_char함수에 문자를할당함
 	{
 		system("clear");
 		printf("   Hello %s\n", name);
